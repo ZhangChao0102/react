@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
-import {MyContext} from './context/Context';
+import './App.scss';
+// import {MyContext} from './context/Context';
 import {renderRoutes} from 'react-router-config';
 // import TestContext from './container/TestContext';
 // import UserName1 from './container/testUseState';
@@ -10,15 +10,11 @@ import {renderRoutes} from 'react-router-config';
 
 function App(props) {
     return (
-        <MyContext.Provider value={'11212'}>
-            111
-            <div className="App">
-                <header className="App-header">
-                    {/*<TestContext/>*/}
-                </header>
+        <div className="App">
+            <header className="App-header">
                 {renderRoutes(props.route.routes)}
-            </div>
-        </MyContext.Provider>
+            </header>
+        </div>
     );
 }
 

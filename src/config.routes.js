@@ -1,5 +1,8 @@
-import TestUseState from './container/testUseState';
+import UserName from './container/UserName';
+import Dialog from './container/Dialog';
 import App from './App';
+import RendererProp from './container/RenderProp';
+import TestHOC from './container/TestHOC';
 
 export function configureRoutes() {
     return [{
@@ -7,12 +10,21 @@ export function configureRoutes() {
         component: App,
         routes: [
             {
-                path: '/app/useState',
-                component: TestUseState
+                path: '/app/username',
+                component: UserName
+            },
+            {
+                path: '/app/dialog',
+                component: Dialog
+            },
+            {
+                path: '/app/render-prop',
+                component: RendererProp
+            },
+            {
+                path: '/app/HOC',
+                component: TestHOC
             }
         ]
-    },{
-        path: '/useState',
-        component: TestUseState
     }];
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from 'alcedo-ui/Dialog';
 
-class UserName extends React.Component {
+class ClassDialog extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -16,9 +16,9 @@ class UserName extends React.Component {
 
     render() {
         return (
-            <Dialog visible={this.props.visible}/>
+            <Dialog visible={this.props.visible} onRequestClose={this.props.onRequestClose}/>
         );
     }
 }
 
-export default UserName;
+export default ClassDialog;
