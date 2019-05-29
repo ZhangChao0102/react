@@ -6,6 +6,7 @@ export default function FunctionDialog(props) {
 
     useEffect(() => {
         setVisible(props.visible);
+        //do something effect
         return () => {
             //remove something by-effect
             console.log('visible changed');
@@ -16,16 +17,3 @@ export default function FunctionDialog(props) {
         <Dialog visible={visible} onRequestClose={props.onRequestClose}/>
     );
 }
-
-// function useVisible(props) {
-//     const [visible, setVisible] = useState(props.visible);
-//
-//     useEffect(() => {
-//         setVisible(props.visible);
-//         return () => {
-//             //remove something by-effect
-//         };
-//     }, [props.visible]);
-//
-//     return visible;
-// }

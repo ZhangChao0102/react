@@ -4,6 +4,7 @@ import App from './App';
 import RendererProp from './container/RenderProp';
 import TestHOC from './container/TestHOC';
 import SearchResults from './container/SearchResults';
+import ExtraHooks from './container/ExtraHooks';
 
 export function configureRoutes() {
     return [{
@@ -29,6 +30,10 @@ export function configureRoutes() {
             {
                 path: '/app/search',
                 component: SearchResults
+            },
+            {
+                path: '/app/hooks',
+                component: ExtraHooks
             }
         ]
     }];
