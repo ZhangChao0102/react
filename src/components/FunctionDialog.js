@@ -8,6 +8,7 @@ export default function FunctionDialog(props) {
         setVisible(props.visible);
         return () => {
             //remove something by-effect
+            console.log('visible changed');
         };
     }, [props.visible]);
 

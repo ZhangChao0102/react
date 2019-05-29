@@ -5,6 +5,7 @@
   "dependencies": {
     "alcedo-ui": "latest",
     "autoprefixer": "^9.5.1",
+    "axios": "^0.18.0",
     "connected-react-router": "latest",
     "happypack": "^5.0.1",
     "history": "latest",

@@ -3,6 +3,7 @@ import Dialog from './container/Dialog';
 import App from './App';
 import RendererProp from './container/RenderProp';
 import TestHOC from './container/TestHOC';
+import SearchResults from './container/SearchResults';
 
 export function configureRoutes() {
     return [{
@@ -24,6 +25,10 @@ export function configureRoutes() {
             {
                 path: '/app/HOC',
                 component: TestHOC
+            },
+            {
+                path: '/app/search',
+                component: SearchResults
             }
         ]
     }];
