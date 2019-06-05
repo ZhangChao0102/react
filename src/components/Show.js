@@ -1,6 +1,6 @@
 import React from 'react';
 
-class RenderProp extends React.Component {
+class Show extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -14,4 +14,4 @@ class RenderProp extends React.Component {
     }
 }
 
-export default RenderProp;
+export default Show;

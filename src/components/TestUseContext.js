@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
-import {MyContext} from '../context/Context';
+import {MyContext, MyContext2} from '../context/Context';
 
 function TestUseContext() {
     const context = useContext(MyContext);
+    const context2 = useContext(MyContext2);
 
     return (
         <div>
@@ -10,12 +11,17 @@ function TestUseContext() {
             <MyContext.Consumer>
                 {
                     (value) =>
-                        <div>
-                            context value is {value}
-                        </div>
+                        <MyContext2.Consumer>
+                            {
+                                (value2) =>
+                                    <div>
+                                        context value is {value + '' + value2}
+                                    </div>
+                            }
+                        </MyContext2.Consumer>
                 }
             </MyContext.Consumer>
-            context value is {context}
+            context value is {context + '' + context2}
         </div>
     );
 }

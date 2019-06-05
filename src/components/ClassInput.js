@@ -10,6 +10,10 @@ class UserName extends React.Component {
         };
     }
 
+    init = () => {
+
+    };
+
     setName = (name) => {
         this.setState({
             name

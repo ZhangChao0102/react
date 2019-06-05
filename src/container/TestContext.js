@@ -1,22 +1,29 @@
 import React, {useContext} from 'react';
 import {MyContext} from '../context/Context';
 
-function TestContext() {
-    const context = useContext(MyContext);
+class TestContext extends React.Component{
+    constructor(props) {
+        super(props);
 
-    return (
-        <div>
-            <MyContext.Consumer>
-                {
-                    (value) =>
-                        <div>
-                            {value}
-                        </div>
-                }
-            </MyContext.Consumer>
-            {context}
-        </div>
-    );
+        // this.context2 = useContext(MyContext);
+    }
+
+    render(){
+        return (
+            <div>
+                <MyContext.Consumer>
+                    {
+                        (value) =>
+                            <div>
+                                {value}
+                            </div>
+                    }
+                </MyContext.Consumer>
+                {/*{this.context2}*/}
+            </div>
+        );
+    }
+
 }
 
 export default TestContext;

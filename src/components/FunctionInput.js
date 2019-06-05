@@ -1,36 +1,45 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import TextField from 'alcedo-ui/TextField';
+import RaisedButton from 'alcedo-ui/RaisedButton';
 
-function UserName() {
+function UserName(props, ref) {
+
     const [name, setName] = useState('tom');
-    const width = useWidth();
+    const [width, setWidth] = useWindowWidth();
 
     return (
         <Fragment>
             <TextField value={name} onChange={(value) => {
                 setName(value);
             }}/>
-            <TextField value={width}/>
+            <RaisedButton value="Width 800" onClick={() => {
+                setWidth(width + 1);
+            }}/>
+            <p>{width}</p>
         </Fragment>
     );
 }
 
 export default UserName;
 
-function useWidth() {
-    const [pageWidth, setWidth] = useState(window.innerWidth);
+function useWindowWidth() {
+    const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        console.log('add');
-        const handlerResize = () => {
-            setWidth(window.innerWidth);
-        };
-        window.addEventListener('resize', handlerResize);
-        return () => {
-            console.log('remove');
-            window.removeEventListener('resize', handlerResize);
-        };
-    });
 
-    return pageWidth;
+        const handleResize = (e) => {
+            setWidth(e.target.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+
+        console.log('width::', width);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+
+    });
+    return [
+        width, setWidth
+    ];
 }

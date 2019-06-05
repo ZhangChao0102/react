@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
-import {MyContext} from './context/Context';
+import {MyContext, MyContext2} from './context/Context';
 import {renderRoutes} from 'react-router-config';
-// import TestContext from './container/TestContext';
+import TestContext from './container/TestContext';
 // import UserName1 from './container/testUseState';
 // import UserName2 from './container/testOlderState';
 // import Dialog1 from './container/testUseEffect';
@@ -11,12 +11,14 @@ import {renderRoutes} from 'react-router-config';
 function App(props) {
     return (
         <MyContext.Provider value={'11212'}>
-            <div className="App">
-                <header className="App-header">
-                    {/*<TestContext/>*/}
-                    {renderRoutes(props.route.routes)}
-                </header>
-            </div>
+            <MyContext2.Provider value={'12345'}>
+                <div className="App">
+                    <header className="App-header">
+                        <TestContext/>
+                        {renderRoutes(props.route.routes)}
+                    </header>
+                </div>
+            </MyContext2.Provider>
         </MyContext.Provider>
     );
 }
