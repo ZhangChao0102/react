@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import TextField from 'alcedo-ui/TextField';
-import axios from 'axios';
+import axios from 'axios/index';
 
 export default function FunctionDialog(props) {
     const [query, setQuery] = useState('react');

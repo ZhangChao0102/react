@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import ClassDialog from '../components/ClassDialog';
-import FunctionDialog from '../components/FunctionDialog';
+import ClassDialog from '../../components/ClassDialog';
+import FunctionDialog from '../../components/FunctionDialog';
 import RaisedButton from 'alcedo-ui/RaisedButton';
 
 export default function UserName() {

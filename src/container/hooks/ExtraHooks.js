@@ -1,14 +1,14 @@
 import React from 'react';
-import TestUseCallback from '../components/TestUseCallback';
-import TestUseMemo from '../components/TestUseMemo';
-import TestUseReducer from '../components/TestUseReducer';
-import TestUseRef from '../components/TestUseRef';
-import TestUseContext from '../components/TestUseContext';
-import TestUseState from '../components/TestUseState';
-import TestUseEffect from '../components/TestUseEffect';
-import TestUseImperativeHandle from '../components/TestUseImperativeHandle';
+import TestUseCallback from '../../components/TestUseCallback';
+import TestUseMemo from '../../components/TestUseMemo';
+import TestUseReducer from '../../components/TestUseReducer';
+import TestUseRef from '../../components/TestUseRef';
+import TestUseContext from '../../components/TestUseContext';
+import TestUseState from '../../components/TestUseState';
+import TestUseEffect from '../../components/TestUseEffect';
+import TestUseImperativeHandle from '../../components/TestUseImperativeHandle';
 
-import '../scss/ExtraHooks.scss';
+import '../../scss/ExtraHooks.scss';
 
 function ExtraHooks() {
     return (

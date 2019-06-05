@@ -1,5 +1,5 @@
 import React from 'react';
-import Show from '../components/Show';
+import Show from '../../components/Show';
 
 class RendererProp extends React.Component {
     constructor(props) {

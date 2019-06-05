@@ -1,10 +1,11 @@
-import UserName from './container/UserName';
-import Dialog from './container/Dialog';
+import UserName from './container/hooks/UserName';
+import Dialog from './container/hooks/Dialog';
 import App from './App';
-import RendererProp from './container/RenderProp';
-import TestHOC from './container/TestHOC';
-import SearchResults from './container/SearchResults';
-import ExtraHooks from './container/ExtraHooks';
+import RendererProp from './container/hooks/RenderProp';
+import TestHOC from './container/hooks/TestHOC';
+import SearchResults from './container/hooks/SearchResults';
+import ExtraHooks from './container/hooks/ExtraHooks';
+import Axios from './container/axios/Axios';
 
 export function configureRoutes() {
     return [{
@@ -34,6 +35,10 @@ export function configureRoutes() {
             {
                 path: '/app/hooks',
                 component: ExtraHooks
+            },
+            {
+                path: '/app/axios',
+                component: Axios
             }
         ]
     }];

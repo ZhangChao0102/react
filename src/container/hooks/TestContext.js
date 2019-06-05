@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {MyContext} from '../context/Context';
+import {MyContext} from '../../context/Context';
 
 class TestContext extends React.Component{
     constructor(props) {
