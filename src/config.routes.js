@@ -6,6 +6,7 @@ import TestHOC from './container/hooks/TestHOC';
 import SearchResults from './container/hooks/SearchResults';
 import ExtraHooks from './container/hooks/ExtraHooks';
 import Axios from './container/axios/Axios';
+import Flex from './container/flex/Flex';
 
 export function configureRoutes() {
     return [{
@@ -39,6 +40,10 @@ export function configureRoutes() {
             {
                 path: '/app/axios',
                 component: Axios
+            },
+            {
+                path: '/app/flex',
+                component: Flex
             }
         ]
     }];
