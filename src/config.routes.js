@@ -7,6 +7,7 @@ import SearchResults from './container/hooks/SearchResults';
 import ExtraHooks from './container/hooks/ExtraHooks';
 import Axios from './container/axios/Axios';
 import Flex from './container/flex/Flex';
+import Fetch from './container/fetch/Fetch';
 
 export function configureRoutes() {
     return [{
@@ -44,6 +45,10 @@ export function configureRoutes() {
             {
                 path: '/app/flex',
                 component: Flex
+            },
+            {
+                path: '/app/fetch',
+                component: Fetch
             }
         ]
     }];

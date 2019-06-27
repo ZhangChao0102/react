@@ -14,7 +14,7 @@ function App(props) {
             <MyContext2.Provider value={'12345'}>
                 <div className="App">
                     <header className="App-header">
-                        <TestContext/>
+                        {/*<TestContext/>*/}
                         {renderRoutes(props.route.routes)}
                     </header>
                 </div>
