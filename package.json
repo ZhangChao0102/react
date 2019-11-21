@@ -24,7 +24,7 @@
     "react-scripts": "3.0.1",
     "redux": "latest"
   },
-  "proxy": "https://testapi.travelrtd.com/dplatform-cloud-gateway",
+  "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

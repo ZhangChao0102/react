@@ -8,6 +8,7 @@ import ExtraHooks from './container/hooks/ExtraHooks';
 import Axios from './container/axios/Axios';
 import Flex from './container/flex/Flex';
 import Fetch from './container/fetch/Fetch';
+import Graphql from './container/graphql/Graphql';
 import Suspense from './container/suspense/Suspense';
 import NewFeature from './container/newFeature/NewFeature';
 import ES2016 from './container/newFeature/ESVersion/ES2016';
@@ -55,6 +56,10 @@ export function configureRoutes() {
             {
                 path: '/app/fetch',
                 component: Fetch
+            },
+            {
+                path: '/app/graphql',
+                component: Graphql
             },
             {
                 path: '/app/suspense',
