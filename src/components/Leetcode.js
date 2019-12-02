@@ -593,8 +593,8 @@ let xuanZe = function (arr) {
  * 插入排序
  */
 let chaRu = function (arr) {
+    let time1 = new Date().getTime();
     let newArr = arr.slice();
-
     for (let i = 1; i < newArr.length; i++) {
         let temp = newArr[i];
 
@@ -607,38 +607,46 @@ let chaRu = function (arr) {
             }
         }
     }
-
+    let time2 = new Date().getTime();
+    console.log(time2 - time1);
     return newArr;
 };
 
-// console.log(chaRu([0, 5, 9, 3, 4, 1]));
+console.log(chaRu([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
 /**
- * 希尔排序 not finished
+ * 希尔排序
  */
 let xiEr = function (arr) {
-    let length = 1, newArr = arr.slice();
+    let increSeq = [], n = 1, step = 0, resultArr = arr.slice();
 
-    while (length < newArr.length) {
-        length = length * 2 + 1;
+    /*构造增量序列*/
+    while (step < arr.length) {
+        step = 2 ^ n - 1;
+        increSeq.push(step);
+        n++;
     }
 
-    while (length > 0) {
-        for (let i = 0; i < newArr.length - length; i++) {
-            let temp = newArr[i];
-            if (temp > newArr[i + length]) {
-                newArr[i] = newArr[i + length];
-                newArr[i + length] = temp;
+    for (let i = increSeq.length - 1; i >= 0; i--) {
+        let step = increSeq[i];
+        for (let j = 0; j < step; j++) {
+            let spacingArray = [], multiple = 0;
+            while (multiple * step + j < resultArr.length) {
+                spacingArray.push(resultArr[multiple * step + j]);
+                multiple++;
+            }
+            let sortedArr = chaRu(spacingArray);
+            while (sortedArr.length > 0) {
+                multiple--;
+                resultArr[multiple * step + j] = sortedArr.pop();
             }
         }
-
-        length = Math.floor(length / 2);
     }
 
-    return newArr;
+    return resultArr;
 };
 
-// console.log(xiEr([0, 5, 9, 3, 4, 1, 0, 2]));
+// console.log(xiEr([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
 /**
  * 归并排序
@@ -723,7 +731,7 @@ function guiBing2(array) {
     return newArray;
 }
 
-// console.log(guiBing2([0, 5, 9, 3, 4, 1, 0, 2, 1]));
+// console.log(guiBing2([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
 /**
  * 堆排序
@@ -745,12 +753,12 @@ function stack(arr) {
                 index = nexIndex;
             }
         }
-        resultArray = [...resultArray, stackArray.shift()];
+        resultArray = [stackArray.shift(), ...resultArray];
     }
     return resultArray;
 }
 
-console.log(stack([0, 5, 9, 3, 4, 1, 0, 2, 1]));
+// console.log(stack([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
 function shell(arr) {
     let newArr = arr.slice(), length = Math.floor(newArr.length / 2) + 1;
