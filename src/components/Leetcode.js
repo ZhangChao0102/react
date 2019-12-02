@@ -614,7 +614,7 @@ let chaRu = function (arr) {
 // console.log(chaRu([0, 5, 9, 3, 4, 1]));
 
 /**
- * 希尔排序
+ * 希尔排序 not finished
  */
 let xiEr = function (arr) {
     let length = 1, newArr = arr.slice();
@@ -638,4 +638,125 @@ let xiEr = function (arr) {
     return newArr;
 };
 
-console.log(xiEr([0, 5, 9, 3, 4, 1, 0, 2]));
+// console.log(xiEr([0, 5, 9, 3, 4, 1, 0, 2]));
+
+/**
+ * 归并排序
+ */
+let guiBing = function (arr) {
+    let length = 1, newArray = arr.slice();
+
+    while (length < newArray.length) {
+        for (let i = 0; i < newArray.length; i += 2 * length) {
+            // newArray.splice(i, 2 * length, ...merge(newArray.slice(i, length + i), newArray.slice(length + i, 2 * length + i)));
+            merge(newArray, i, 2 * length + i, length);
+        }
+        length *= 2;
+    }
+
+    // function merge(arr1, arr2) {
+    //     let newArr = [], j = 0, i = 0;
+    //     while (i < arr1.length && j < arr2.length) {
+    //         if (arr1[i] < arr2[j]) {
+    //             newArr.push(arr1[i]);
+    //             i++;
+    //         } else {
+    //             newArr.push(arr2[j]);
+    //             j++;
+    //         }
+    //     }
+    //     newArr = [...newArr, ...arr1.slice(i), ...arr2.slice(j)];
+    //
+    //     return newArr;
+    // }
+
+    function merge(arr, start, end, length) {
+        let i = start, j = start + length, k = 0; //如果插入了j，i的最大值也要+1
+        while (i < start + length + k && j < end) {
+            if (arr[i] < arr[j]) {
+                i++;
+            } else {
+                arr.splice(i, 0, ...arr.splice(j, 1));
+                k++;
+                i++;
+                j++;
+            }
+        }
+        console.log(arr);
+    }
+
+    return newArray;
+};
+
+// console.log(guiBing([0, 5, 9, 3, 4, 1, 0, 2, 1]));
+
+/**
+ * 归并排序
+ */
+function guiBing2(array) {
+    let newArray = array.slice();
+
+    (function apart(arr, start, end) {
+        if (end - start > 1) {
+            let mid = Math.round((start + end) / 2);
+            apart(arr, start, mid);
+            apart(arr, mid, end);
+            merge(arr, start, end);
+        }
+    })(newArray, 0, newArray.length);
+
+    function merge(arr, start, end) {
+        let mid = Math.round((start + end) / 2);
+        let i = start, j = mid, k = 0; //如果插入了j，i的最大值也要+1
+        while (i < mid + k && j < end) {
+            if (arr[i] < arr[j]) {
+                i++;
+            } else {
+                arr.splice(i, 0, ...arr.splice(j, 1));
+                k++;
+                i++;
+                j++;
+            }
+        }
+    }
+
+    return newArray;
+}
+
+// console.log(guiBing2([0, 5, 9, 3, 4, 1, 0, 2, 1]));
+
+/**
+ * 堆排序
+ */
+function stack(arr) {
+    let stackArray = arr.slice(), resultArray = [];
+    while (stackArray.length > 0) {
+        let last = stackArray.pop();
+        stackArray = [last, ...stackArray];
+        for (let i = 1; i < stackArray.length; i++) {
+            let index = i;
+            while (index > 0) {
+                index = Math.floor((index - 1) / 2);
+                if (stackArray[i] > stackArray[index]) {
+                    let temp = stackArray[i];
+                    stackArray[i] = stackArray[index];
+                    stackArray[index] = temp;
+                }
+            }
+        }
+        resultArray = [...resultArray, stackArray.shift()];
+    }
+    return resultArray;
+}
+
+console.log(stack([0, 5, 9, 3, 4, 1, 0, 2, 1]));
+
+
+
+
+
+
+
+
+
+
