@@ -899,7 +899,30 @@ function radix(arr) {
 
 // console.log(radix([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
+/**
+ * leetcode 41: 缺失的第一个正数
+ */
+function firstLostPositiveNumber(arr) {
+    let indexArr = [], index = 1;
 
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > 0) {
+            indexArr[arr[i] - 1] = 1;
+        }
+    }
+
+    for (let i = 0; i < indexArr.length; i++) {
+        if (!indexArr[i]) {
+            index = i + 1;
+            break;
+        }
+        if (i === indexArr.length - 1) {
+            index = indexArr.length + 1;
+        }
+    }
+
+    return index;
+}
 
 
 
