@@ -925,7 +925,7 @@ function firstLostPositiveNumber(arr) {
 }
 
 /**
- * leetcode 22: 括号生成 not done
+ * leetcode 22: 括号生成 too complex
  */
 function bracketGenerate(num) {
     let resultArr = [], tree = [null], index = 0, largest = 0, lest = 0;
@@ -969,9 +969,32 @@ function bracketGenerate(num) {
     return resultArr;
 }
 
-console.log(bracketGenerate(8));
+// console.log(bracketGenerate(8));
 
+/**
+ * leetcode 22: 括号生成
+ */
+function bracketGenerate2(num) {
+    let resultArr = [];
 
+    set([], 0, 0);
 
+    function set(arr, left, right) {
+        if (right > left) {
+            return;
+        }
+        if (left < num) {
+            set([...arr, '('], left + 1, right);
+        }
+        if (right < num) {
+            set([...arr, ')'], left, right + 1);
+        }
+        if (left === num && right === num) {
+            resultArr.push(arr.join(''));
+        }
+    }
 
+    return resultArr;
+}
 
+console.log(bracketGenerate2(3));
