@@ -612,7 +612,7 @@ let chaRu = function (arr) {
     return newArr;
 };
 
-console.log(chaRu([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
+// console.log(chaRu([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
 /**
  * 希尔排序
@@ -775,7 +775,7 @@ function shell(arr) {
                 j += length;
             }
         }
-        length = Math.floor(length / 2)
+        length = Math.floor(length / 2);
     }
 
     return newArr;
@@ -788,7 +788,7 @@ function quick(arr) {
 
     return (function loop(arr, standard) {
         if (arr.length <= 1) {
-            return arr
+            return arr;
         }
         let arr1 = [], arr2 = [];
         let flag = false;
@@ -831,7 +831,7 @@ function count(arr) {
         }
     }
 
-    return arr2
+    return arr2;
 }
 
 // console.log(count([1, 8, 7, 6, 5, 1, 2, 3, 0, 0]));
@@ -858,7 +858,7 @@ function bucket(arr, bucketSize = 3) {
         }
     }
     for (let i = 0; i < arrs.length; i++) {
-        finallyArr = [...finallyArr, ...count(arrs[i])]
+        finallyArr = [...finallyArr, ...count(arrs[i])];
     }
     return finallyArr;
 }
@@ -924,7 +924,52 @@ function firstLostPositiveNumber(arr) {
     return index;
 }
 
+/**
+ * leetcode 22: 括号生成 not done
+ */
+function bracketGenerate(num) {
+    let resultArr = [], tree = [null], index = 0, largest = 0, lest = 0;
 
+    // while (index <= num) {
+    //     index++;
+    //     for (let i = 0; i < index; i++) {
+    //         tree = [...tree, '(', ')'];
+    //     }
+    // }
+
+    while (index < 2 * num) {
+        largest = largest * 2 + 2;
+        lest = lest * 2 + 1;
+        for (let i = 0; i < Math.pow(2, index); i++) {
+            tree = [...tree, '(', ')'];
+        }
+        index++;
+    }
+    while (lest <= largest) {
+        let temp = '', left = 0, right = 0;
+        for (let i = lest; i > 0; i = Math.floor((i - 1) / 2)) {
+            temp = tree[i] + temp;
+            if (tree[i] === '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left > right || left > num || right > num || i === 2) {
+                temp = '';
+                break;
+            }
+            if (i === 1) {
+                resultArr.push(temp);
+                temp = '';
+            }
+        }
+        lest++;
+    }
+
+    return resultArr;
+}
+
+console.log(bracketGenerate(8));
 
 
 
