@@ -997,4 +997,65 @@ function bracketGenerate2(num) {
     return resultArr;
 }
 
-console.log(bracketGenerate2(3));
+// console.log(bracketGenerate2(3));
+
+/**
+ * leetcode 22: 括号生成
+ */
+function bracketGenerate3(num) {
+    let resultArray = [['']];
+
+    for (let i = 1; i <= num; i++) {
+        resultArray[i] = [];
+        for (let l = 0; l < resultArray[i - 1].length; l++) {
+            let string = resultArray[i - 1][l];
+            console.log('l=' + l);
+            for (let j = 0; j <= string.length; j++) {
+                console.log('j=' + j);
+                for (let k = j + 1; k <= string.length + 1; k++) {
+                    console.log('k=' + k);
+                    let newString = string.split('');
+                    newString.splice(j, 0, '(');
+                    newString.splice(k, 0, ')');
+                    resultArray[i].push(newString.join(''));
+                }
+            }
+        }
+    }
+
+    return [...new Set(resultArray[num])];
+}
+
+// console.log(bracketGenerate3(2));
+
+/**
+ * leetcode 30 串联所有单词的子串
+ * @param s
+ * @param words
+ */
+var findSubstring = function (s, words) {
+    if (words.length === 0 || s.length === 0) {
+        return [];
+    }
+    let resultArr = [], wordLength = words[0].length, allLength = words.length * wordLength;
+
+    for (let i = 0; i < s.length - allLength + 1; i++) {
+        let temp = s.substr(i, allLength).split(''), flag = true, copyWord = words.slice();
+
+        while (temp.length > 0) {
+            let word = temp.splice(0, wordLength).join('');
+            let index = copyWord.indexOf(word);
+            if (index === -1) {
+                flag = false;
+                temp = ''
+            } else {
+                copyWord.splice(index, 1);
+            }
+        }
+        flag && resultArr.push(i);
+    }
+
+    return resultArr;
+};
+
+console.log(findSubstring("wordgoodgoodgoodbestword", ["word", "good", "best", "good"]))
