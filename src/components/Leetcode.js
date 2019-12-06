@@ -1047,7 +1047,7 @@ var findSubstring = function (s, words) {
             let index = copyWord.indexOf(word);
             if (index === -1) {
                 flag = false;
-                temp = ''
+                temp = '';
             } else {
                 copyWord.splice(index, 1);
             }
@@ -1058,4 +1058,36 @@ var findSubstring = function (s, words) {
     return resultArr;
 };
 
-console.log(findSubstring("wordgoodgoodgoodbestword", ["word", "good", "best", "good"]))
+// console.log(findSubstring("wordgoodgoodgoodbestword", ["word", "good", "best", "good"]))
+
+/**
+ * leetcode 229 求众数
+ * @param nums
+ */
+var majorityElement = function (nums) {
+    let obj = {};
+
+    for (let i = 0; i < nums.length; i++) {
+        if (obj[nums[i]] || obj[nums[i]] === 0) {
+            obj[nums[i]]++;
+        } else {
+            obj[nums[i]] = -Math.floor(nums.length / 3);
+        }
+    }
+
+    return Object.keys(obj).filter(key => obj[key] >= 0).map(item => parseInt(item));
+};
+
+console.log(majorityElement([0, 0, 0]));
+
+/**
+ * 摩尔投票
+ * @param nums
+ */
+var majorityElement2 = function (nums) {
+    let cache1, cache2, cache3;
+
+    for (let i = 0; i < nums.length; i++) {
+
+    }
+};
