@@ -1091,3 +1091,116 @@ var majorityElement2 = function (nums) {
 
     }
 };
+
+/**
+ * leetcode 37 解数独
+ * @param board
+ */
+var solveSudoku = function (board) {
+    let usedNumsObj = {
+        '1': 0,
+        '2': 0,
+        '3': 0,
+        '4': 0,
+        '5': 0,
+        '6': 0,
+        '7': 0,
+        '8': 0,
+        '9': 0,
+    };
+    let resultBoard = board.slice();
+    let emptyArray = [];
+
+    //构造空值的位子集合
+    for (let i = 0; i < resultBoard.length; i++) {
+        for (let j = 0; j < resultBoard[i].length; j++) {
+            if (resultBoard[i][j] === '.') {
+                emptyArray.push([i, j]);
+            } else {
+                usedNumsObj[resultBoard[i][j]]++;
+            }
+        }
+    }
+
+    function loop(board, index, num) {
+        let [i, j] = emptyArray[index];
+        board[i][j] = num;
+        usedNumsObj[num]++;
+
+        let arrI = board[i], arrJ = [], arrGird = [], girdI = Math.floor(i / 3) * 3, girdJ = Math.floor(j / 3) * 3;
+        //构造第j列的数组
+        for (let index = 0; index < board.length; index++) {
+            arrJ.push(board[index][j]);
+        }
+        //构造i，j所在的方块数组
+        for (let index2 = girdI; index2 < girdI + 3; index2++) {
+            for (let index3 = girdJ; index3 < girdJ + 3; index3++) {
+                arrGird.push(board[index2][index3]);
+            }
+        }
+        //不符合则直接还原
+        if (!validGridTrue(arrI) || !validGridTrue(arrJ) || !validGridTrue(arrGird)) {
+            board[i][j] = '.';
+            usedNumsObj[num]--;
+            return false;
+        }
+
+        if (index === emptyArray.length - 1) {
+            return true;
+        }
+
+        for (let key in usedNumsObj) {
+            if (usedNumsObj[key] === 9) {
+                continue;
+            }
+            if (loop(board, index + 1, key)) {
+                return true;
+            }
+        }
+
+        board[i][j] = '.';
+        usedNumsObj[num]--;
+        return false;
+    };
+
+    //验证数组中是否没有重复
+    function validGridTrue(arr) {
+        let cacheArr = {};
+        for (let k1 = 0; k1 < arr.length; k1++) {
+            let key = arr[k1];
+            if (key === '.') {
+                continue;
+            }
+            if (!cacheArr[key]) {
+                cacheArr[key] = 1;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    for (let key in usedNumsObj) {
+        if (usedNumsObj[key] === 9) {
+            continue;
+        }
+        if (loop(resultBoard, 0, key)) {
+            break;
+        }
+    }
+
+    return resultBoard;
+};
+
+console.log(solveSudoku(
+    [
+        [".", ".", ".", ".", ".", "7", ".", ".", "9"],
+        [".", "4", ".", ".", "8", "1", "2", ".", "."],
+        [".", ".", ".", "9", ".", ".", ".", "1", "."],
+        [".", ".", "5", "3", ".", ".", ".", "7", "2"],
+        ["2", "9", "3", ".", ".", ".", ".", "5", "."],
+        [".", ".", ".", ".", ".", "5", "3", ".", "."],
+        ["8", ".", ".", ".", "2", "3", ".", ".", "."],
+        ["7", ".", ".", ".", "5", ".", ".", "4", "."],
+        ["5", "3", "1", ".", "7", ".", ".", ".", "."]
+    ]));
