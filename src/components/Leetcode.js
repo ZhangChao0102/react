@@ -1217,9 +1217,13 @@ var uniquePaths = function (m, n) {
  * @param n
  */
 var uniquePaths2 = function (array) {
-    let cache = {};
+    let cache = {}, cache2 = {};
     return (function loop(m, n) {
         if (array[m][n] === 1) {
+            // if (cache2[m])
+            //     cache2[m] = Math.min(n, cache2[m]);
+            // else
+            //     cache2[m] = n;
             return 0;
         }
         if (m === 0 && n === 0) {
@@ -1230,7 +1234,7 @@ var uniquePaths2 = function (array) {
         }
 
         return cache[m + ',' + n]
-    })(array.length - 1, array[array.length - 1].length - 1)
+    })(array.length - 1, array[array.length - 1].length - 1);
 };
 
 console.log(uniquePaths2([1, 0]));
