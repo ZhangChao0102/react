@@ -1047,7 +1047,7 @@ var findSubstring = function (s, words) {
             let index = copyWord.indexOf(word);
             if (index === -1) {
                 flag = false;
-                temp = ''
+                temp = '';
             } else {
                 copyWord.splice(index, 1);
             }
@@ -1061,18 +1061,36 @@ var findSubstring = function (s, words) {
 // console.log(findSubstring("wordgoodgoodgoodbestword", ["word", "good", "best", "good"]))
 
 /**
- * leetcode 229
+ * leetcode 229 求众数
  * @param nums
  */
-var findTheMost = function (nums) {
-    let arr = [];
+var majorityElement = function (nums) {
+    let obj = {};
 
     for (let i = 0; i < nums.length; i++) {
-        if (arr.length < 3) {
-            arr.push(nums.splice(i, 1));
+        if (obj[nums[i]] || obj[nums[i]] === 0) {
+            obj[nums[i]]++;
+        } else {
+            obj[nums[i]] = -Math.floor(nums.length / 3);
         }
     }
-}
+
+    return Object.keys(obj).filter(key => obj[key] >= 0).map(item => parseInt(item));
+};
+
+console.log(majorityElement([0, 0, 0]));
+
+/**
+ * 摩尔投票
+ * @param nums
+ */
+var majorityElement2 = function (nums) {
+    let cache1, cache2, cache3;
+
+    for (let i = 0; i < nums.length; i++) {
+
+    }
+};
 
 /**
  * leetcode 37 解数独
@@ -1088,7 +1106,7 @@ var solveSudoku = function (board) {
         '6': 0,
         '7': 0,
         '8': 0,
-        '9': 0,
+        '9': 0
     };
     let resultBoard = board.slice();
     let emptyArray = [];
@@ -1187,6 +1205,19 @@ var solveSudoku = function (board) {
 //         ["5", "3", "1", ".", "7", ".", ".", ".", "."]
 //     ]));
 
+// console.log(solveSudoku(
+//     [
+//         [".", ".", ".", ".", ".", "7", ".", ".", "9"],
+//         [".", "4", ".", ".", "8", "1", "2", ".", "."],
+//         [".", ".", ".", "9", ".", ".", ".", "1", "."],
+//         [".", ".", "5", "3", ".", ".", ".", "7", "2"],
+//         ["2", "9", "3", ".", ".", ".", ".", "5", "."],
+//         [".", ".", ".", ".", ".", "5", "3", ".", "."],
+//         ["8", ".", ".", ".", "2", "3", ".", ".", "."],
+//         ["7", ".", ".", ".", "5", ".", ".", "4", "."],
+//         ["5", "3", "1", ".", "7", ".", ".", ".", "."]
+//     ]));
+
 /**
  * leetcode 62 不同路径
  * @param m
@@ -1238,3 +1269,26 @@ var uniquePaths2 = function (array) {
 };
 
 console.log(uniquePaths2([1, 0]));
+
+/**
+ * 260. 只出现一次的数字 III
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var singleNumber = function (nums) {
+    let i = 0, j = nums.length - 1;
+
+    for (let k = 1; k < nums.length; k++) {
+        if (nums[k] === nums[i] && k !== i) {
+            nums.splice(i, 1);
+            nums.splice(i < k ? k - 1 : k, 1);
+        }
+        if (nums[k] === nums[j] && k !== j) {
+            nums.splice(j, 1);
+            nums.splice(j < k ? k - 1 : k, 1);
+            j--;
+        }
+    }
+
+    return nums;
+};
