@@ -1268,7 +1268,76 @@ var uniquePaths2 = function (array) {
     })(array.length - 1, array[array.length - 1].length - 1);
 };
 
-console.log(uniquePaths2([1, 0]));
+// console.log(uniquePaths2([1, 0]));
+
+/**
+ * leetcode 64 最小路径和
+ * @param grid
+ */
+var minPathSum = function (grid) {
+    let maxI = grid.length - 1, maxJ = grid[maxI].length - 1, cache = {};
+
+    return (function loop(x, y) {
+        if (x === 0 && y === 0) {
+            return grid[0][0];
+        }
+
+        if (!cache[x + ',' + y]) {
+            if (x === 0) {
+                cache[x + ',' + y] = loop(x, y - 1) + grid[x][y];
+            } else if (y === 0) {
+                cache[x + ',' + y] = loop(x - 1, y) + grid[x][y];
+            } else {
+                cache[x + ',' + y] = Math.min(loop(x - 1, y), loop(x, y - 1)) + grid[x][y];
+            }
+        }
+
+        return cache[x + ',' + y];
+    })(maxI, maxJ)
+};
+
+var minPathSum2 = function (grid) {
+    for (let i = grid.length - 1; i >= 0; i--) {
+        for (let j = grid[i].length - 1; j >= 0; j--) {
+            if (j === grid[i].length - 1) {
+                if (i !== grid.length - 1) {
+                    grid[i][j] = grid[i][j] + grid[i + 1][j];
+                }
+            } else {
+                if (i !== grid.length - 1) {
+                    grid[i][j] = grid[i][j] + Math.min(grid[i + 1][j], grid[i][j + 1]);
+                } else {
+                    grid[i][j] = grid[i][j] + grid[i][j + 1];
+                }
+            }
+
+        }
+    }
+
+    return grid[0][0];
+}
+
+console.log(minPathSum2([
+    [5, 1, 0, 4, 0, 1, 1, 6, 7, 3, 9, 9, 4, 6, 8, 1],
+    [9, 1, 0, 6, 4, 2, 8, 0, 1, 6, 0, 2, 7, 9, 0, 4],
+    [3, 2, 0, 3, 3, 3, 1, 3, 7, 3, 2, 1, 1, 2, 2, 0],
+    [5, 2, 8, 2, 7, 6, 2, 0, 5, 3, 2, 4, 4, 4, 8, 9],
+    [7, 0, 5, 2, 4, 6, 7, 1, 1, 1, 2, 2, 6, 6, 4, 1],
+    [0, 3, 5, 9, 1, 8, 0, 6, 3, 4, 0, 9, 9, 0, 9, 8],
+    [3, 4, 0, 7, 2, 8, 0, 4, 9, 4, 8, 5, 2, 5, 9, 4],
+    [0, 4, 4, 1, 4, 6, 0, 7, 0, 2, 7, 1, 3, 8, 9, 8],
+    [2, 0, 7, 4, 0, 7, 0, 1, 1, 1, 9, 5, 6, 8, 9, 6],
+    [4, 3, 9, 9, 1, 9, 8, 4, 2, 7, 5, 7, 5, 5, 5, 9],
+    [7, 4, 6, 9, 1, 8, 0, 4, 9, 9, 9, 7, 9, 8, 3, 4],
+    [4, 3, 5, 7, 4, 5, 1, 8, 3, 7, 7, 0, 4, 4, 2, 3],
+    [8, 0, 2, 9, 8, 2, 5, 8, 4, 4, 7, 3, 5, 1, 9, 1],
+    [6, 4, 8, 2, 2, 2, 1, 7, 1, 8, 7, 5, 5, 1, 0, 3],
+    [1, 2, 5, 0, 6, 0, 0, 0, 7, 7, 6, 4, 0, 5, 5, 8],
+    [2, 5, 1, 4, 9, 4, 1, 0, 2, 0, 5, 7, 4, 7, 3, 5],
+    [9, 8, 7, 8, 8, 9, 8, 5, 9, 6, 9, 9, 2, 6, 0, 6],
+    [4, 1, 2, 3, 5, 5, 4, 9, 5, 1, 9, 9, 9, 2, 7, 0],
+    [0, 6, 8, 0, 6, 9, 8, 7, 5, 7, 8, 9, 6, 8, 5, 0]
+]));
 
 /**
  * 260. 只出现一次的数字 III
@@ -1276,19 +1345,24 @@ console.log(uniquePaths2([1, 0]));
  * @return {number[]}
  */
 var singleNumber = function (nums) {
-    let i = 0, j = nums.length - 1;
+    let xor = 0;
 
-    for (let k = 1; k < nums.length; k++) {
-        if (nums[k] === nums[i] && k !== i) {
-            nums.splice(i, 1);
-            nums.splice(i < k ? k - 1 : k, 1);
-        }
-        if (nums[k] === nums[j] && k !== j) {
-            nums.splice(j, 1);
-            nums.splice(j < k ? k - 1 : k, 1);
-            j--;
+    //按位异或，得出两个一次的数字中不同的那几位
+    for (let v of nums) {
+        xor ^= v;
+    }
+
+    //得出不同的那几位中最后一位，即10...00
+    let mask = xor & -xor, arr = [0, 0];
+
+    //通过与最后不同的那一位‘&’操作，将数组分成两个数组，一个数组那一位都为0，另一个都为1，且除了只出现一次的那一个，别的都是两两成双，于是异或掉其他全部，只剩那一个一次的。
+    for (let v of nums) {
+        if (mask & v === 0) {
+            arr[0] ^= v;
+        } else {
+            arr[1] ^= v;
         }
     }
 
-    return nums;
+    return arr;
 };
