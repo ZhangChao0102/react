@@ -221,12 +221,6 @@ function canCompleteCircuit(gas, cost) {
 
 // console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]));
 
-function isMatch(s, p) {
-    for (let i = 0; i < s.length; i++) {
-
-    }
-}
-
 function isValidSudoku(board) {
     let verticalArray = [], squareArray = [];
     for (let i = 0; i < board.length; i++) {
@@ -1450,4 +1444,57 @@ var wordBreak2 = function (s, wordDict) {
     return resultArr;
 };
 
-console.log(wordBreak2('catsandog', ['cats', 'dog', 'sand', 'and', 'cat']));
+// console.log(wordBreak2('catsandog', ['cats', 'dog', 'sand', 'and', 'cat']));
+
+/**
+ * 44. 通配符匹配
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ */
+var isMatch = function (s, p) {
+    if ((s && !p)) {
+        return false;
+    }
+    if (p === s) {
+        return true;
+    }
+
+    return (function loop(s, p, i, j) {
+
+        if (i === s.length && j === p.length) {
+            return true;
+        }
+        if ((i <= s.length - 1 && j > p.length - 1)) {
+            return false;
+        }
+        if (s[i] !== p[j] && p[j] !== '?' && p[j] !== '*') {
+            return false;
+        }
+        if (s[i] === p[j]) {
+            return loop(s, p, i + 1, j + 1);
+        }
+
+        if (p[j] === '?') {
+            if (i > s.length - 1) {
+                return false;
+            }
+            return loop(s, p, i + 1, j + 1);
+        }
+
+        if (p[j] === '*') {
+            if (p[j - 1] === '*') {
+                return loop(s, p, i, j + 1);
+            }
+            for (let k = i; k <= s.length; k++) {
+                if (loop(s, p, k, j + 1)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    })(s, p, 0, 0);
+};
+
+console.log(isMatch('', '***'));
