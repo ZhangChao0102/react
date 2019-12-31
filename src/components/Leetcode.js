@@ -1447,7 +1447,7 @@ var wordBreak2 = function (s, wordDict) {
 // console.log(wordBreak2('catsandog', ['cats', 'dog', 'sand', 'and', 'cat']));
 
 /**
- * 44. 通配符匹配
+ * 44. 通配符匹配 not done
  * @param {string} s
  * @param {string} p
  * @return {boolean}
@@ -1460,41 +1460,54 @@ var isMatch = function (s, p) {
         return true;
     }
 
-    return (function loop(s, p, i, j) {
+    let dp = [[true, p[0] === '*'], [p[0] === '*']];
 
-        if (i === s.length && j === p.length) {
-            return true;
-        }
-        if ((i <= s.length - 1 && j > p.length - 1)) {
-            return false;
-        }
-        if (s[i] !== p[j] && p[j] !== '?' && p[j] !== '*') {
-            return false;
-        }
-        if (s[i] === p[j]) {
-            return loop(s, p, i + 1, j + 1);
-        }
-
-        if (p[j] === '?') {
-            if (i > s.length - 1) {
-                return false;
+    for (let i = 1; i <= s.length; i++) {
+        for (let j = 1; j <= p.length; j++) {
+            if (!dp[i]) {
+                dp[i] = [];
             }
-            return loop(s, p, i + 1, j + 1);
-        }
-
-        if (p[j] === '*') {
-            if (p[j - 1] === '*') {
-                return loop(s, p, i, j + 1);
-            }
-            for (let k = i; k <= s.length; k++) {
-                if (loop(s, p, k, j + 1)) {
-                    return true;
-                }
+            if (s[i - 1] === p[j - 1] || p[j - 1] === '?') {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else if (p[j - 1] === '*') {
+                dp[i][j] = dp[i - 1][j - 1] || dp[i][j - 1] || dp[i - 1][j];
+            } else {
+                dp[i][j] = false;
             }
         }
+    }
 
-        return false;
-    })(s, p, 0, 0);
+    return dp[s.length][p.length];
 };
 
-console.log(isMatch('', '***'));
+// console.log(isMatch('aab', 'c*a*b'));
+
+/**
+ * 316. 去除重复字母
+ * @param {string} s
+ * @return {string}
+ */
+var removeDuplicateLetters = function (s) {
+    let initialIndex = 'a'.charCodeAt(), resultArray = [];
+
+    for (let i = 0; i < s.length; i++) {
+        if (!resultArray[s[i].charCodeAt() - initialIndex]) {
+            resultArray[s[i].charCodeAt() - initialIndex] = s[i];
+        }
+    }
+
+    return resultArray.filter(item => !!item).join('');
+};
+
+/**
+ * 55. 跳跃游戏
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function (nums) {
+    let index = 0;
+
+    return (function loop(arr, index) {
+
+    })(nums, index);
+};
