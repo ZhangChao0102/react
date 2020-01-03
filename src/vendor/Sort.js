@@ -64,7 +64,7 @@ let chaRu = function (arr) {
         }
     }
     let time2 = new Date().getTime();
-    console.log(time2 - time1);
+    // console.log(time2 - time1);
     return newArr;
 };
 
@@ -77,12 +77,12 @@ let xiEr = function (arr) {
     let increSeq = [], n = 1, step = 0, resultArr = arr.slice();
 
     /*构造增量序列*/
-    while (step < arr.length) {
-        step = 2 ^ n - 1;
+    while (2 ** n - 1 < arr.length) {
+        step = 2 ** n - 1;
         increSeq.push(step);
         n++;
     }
-
+    console.log('increSeq:', increSeq);
     for (let i = increSeq.length - 1; i >= 0; i--) {
         let step = increSeq[i];
         for (let j = 0; j < step; j++) {
@@ -117,22 +117,6 @@ let guiBing = function (arr) {
         }
         length *= 2;
     }
-
-    // function merge(arr1, arr2) {
-    //     let newArr = [], j = 0, i = 0;
-    //     while (i < arr1.length && j < arr2.length) {
-    //         if (arr1[i] < arr2[j]) {
-    //             newArr.push(arr1[i]);
-    //             i++;
-    //         } else {
-    //             newArr.push(arr2[j]);
-    //             j++;
-    //         }
-    //     }
-    //     newArr = [...newArr, ...arr1.slice(i), ...arr2.slice(j)];
-    //
-    //     return newArr;
-    // }
 
     function merge(arr, start, end, length) {
         let i = start, j = start + length, k = 0; //如果插入了j，i的最大值也要+1
@@ -195,8 +179,8 @@ function guiBing2(array) {
 function stack(arr) {
     let stackArray = arr.slice(), resultArray = [];
     while (stackArray.length > 0) {
-        let last = stackArray.pop();
-        stackArray = [last, ...stackArray];
+        // let last = stackArray.pop();
+        // stackArray = [last, ...stackArray];
         for (let i = 1; i < stackArray.length; i++) {
             let index = i;
             while (index > 0) {
@@ -216,26 +200,26 @@ function stack(arr) {
 
 // console.log(stack([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
 
-function shell(arr) {
-    let newArr = arr.slice(), length = Math.floor(newArr.length / 2) + 1;
-
-    while (length > 0) {
-        for (let i = 0; i < length; i++) {
-            let j = i;
-            while (j < newArr.length) {
-                let temp = newArr[j];
-                if (temp > newArr[j + length]) {
-                    newArr[j] = newArr[j + length];
-                    newArr[j + length] = temp;
-                }
-                j += length;
-            }
-        }
-        length = Math.floor(length / 2);
-    }
-
-    return newArr;
-}
+// function shell(arr) {
+//     let newArr = arr.slice(), length = Math.floor(newArr.length / 2) + 1;
+//
+//     while (length > 0) {
+//         for (let i = 0; i < length; i++) {
+//             let j = i;
+//             while (j < newArr.length) {
+//                 let temp = newArr[j];
+//                 if (temp > newArr[j + length]) {
+//                     newArr[j] = newArr[j + length];
+//                     newArr[j + length] = temp;
+//                 }
+//                 j += length;
+//             }
+//         }
+//         length = Math.floor(length / 2);
+//     }
+//
+//     return newArr;
+// }
 
 // console.log(shell([1, 8, 7, 6, 5, 1, 2, 3, 0, 0]));
 
@@ -262,7 +246,8 @@ function quick(arr) {
                 arr1.push(arr[i]);
             }
         }
-        return [...loop(arr1, arr1[Math.round(Math.random() * arr1.length)]), ...loop(arr2, arr2[Math.round(Math.random() * arr2.length)])];
+        return [...loop(arr1, arr1[Math.round(Math.random() * arr1.length)]),
+            ...loop(arr2, arr2[Math.round(Math.random() * arr2.length)])];
     })(arr, standard);
 }
 
@@ -278,7 +263,7 @@ function count(arr) {
             arr1[arr[i]] = 1;
         }
     }
-
+console.log('arr1:', arr1);
     for (let i = 0; i < arr1.length; i++) {
         if (arr1[i] > 0) {
             arr2.push(i);
@@ -353,4 +338,4 @@ function radix(arr) {
     return resultArr;
 }
 
-// console.log(radix([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
+console.log(radix([1, 8, 7, 6, 5, 1, 2, 3, 0, 0, 0, 4, 4, 6, 2, 4, 1, 9, 3, 3, 3]));
