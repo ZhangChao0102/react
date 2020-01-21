@@ -1,3 +1,8 @@
+/**
+ * leetcode
+ * 123 not done.
+ */
+
 function dynamic(array) {
     if (array.length === 1) {
         return 1;
@@ -173,35 +178,29 @@ function maxProfit(prices) {
 
 /**
  * leetCode
- * not right!
+ * 123. 买卖股票的最佳时机 III
  * 股票买入时机 最多两笔交易
  * @param prices
  */
 function maxProfit2(prices) {
-    let profit = [], isBuy = false, index = 0;
+    let min = prices[0], minI = 0, maxI = 0, profit = 0;
 
-    for (let i = 0; i < prices.length; i++) {
-        if (isBuy && i === prices.length - 1) {
-            isBuy = false;
-            profit[index] = profit[index] + prices[i];
-            break;
-        }
-        if (!isBuy && prices[i] < prices[i + 1]) {
-            isBuy = true;
-            profit.push(0 - prices[i]);
-        } else if (isBuy && prices[i] > prices[i + 1]) {
-            isBuy = false;
-            profit[index] = profit[index] + prices[i];
-            index++;
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < min) {
+            min = prices[i];
+            minI = i;
+        } else {
+            if (profit < prices[i] - min) {
+                profit = prices[i] - min;
+                maxI = i;
+            }
         }
     }
-    if (profit.length === 0) {
-        return 0;
-    }
-    return profit.sort((a, b) => b - a).slice(0, 2).reduce((sum, item) => sum + item);
+
+    return profit;
 }
 
-// console.log(maxProfit2([1, 2, 4, 2, 5, 7, 2, 4, 9, 0]));
+console.log(maxProfit2([1, 2, 4, 2, 5, 7, 2, 4, 9, 0]));
 
 function canCompleteCircuit(gas, cost) {
     let newGas = [...gas, ...gas], newCost = [...cost, ...cost], initialIndex = 0;
@@ -1510,4 +1509,906 @@ var canJump = function (nums) {
     return (function loop(arr, index) {
 
     })(nums, index);
+};
+
+/**
+ * 20. 有效的括号
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+    let array = s.split('');
+
+    if (array.length === 0) {
+        return true;
+    }
+
+    for (let i = 0; i < array.length; i++) {
+        switch (array[i]) {
+            case '(':
+            case '[':
+            case '{':
+                break;
+            case ')':
+                if (i > 0 && array[i - 1] === '(') {
+                    array.splice(i - 1, 2);
+                    i -= 2;
+                } else {
+                    return false;
+                }
+                break;
+            case ']':
+                if (i > 0 && array[i - 1] === '[') {
+                    array.splice(i - 1, 2);
+                    i -= 2;
+                } else {
+                    return false;
+                }
+                break;
+            case '}':
+                if (i > 0 && array[i - 1] === '{') {
+                    array.splice(i - 1, 2);
+                    i -= 2;
+                } else {
+                    return false;
+                }
+        }
+    }
+    if (array.length === 0) {
+        return true;
+    }
+
+    return false;
+};
+
+// console.log(isValid('{[]}'));
+
+/**
+ * 26. 删除排序数组中的重复项
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function (nums) {
+    let i = 0;
+    if (nums.length === 0) {
+        return 0;
+    }
+
+    for (let j = 1; j < nums.length; j++) {
+        if (nums[i] !== nums[j]) {
+            i++;
+            nums[i] = nums[j];
+        }
+    }
+
+    return i + 1;
+};
+
+// console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]));
+
+/**
+ * 55. 最大子序和
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function (nums) {
+    if (nums.length === 0) {
+        return;
+    }
+    let sum = 0, result = nums[0];
+
+    for (let i = 0; i < nums.length; i++) {
+        if (sum < 0) {
+            sum = nums[i];
+        } else {
+            sum += nums[i];
+        }
+
+        result = Math.max(sum, result);
+    }
+    return result;
+};
+
+/**
+ * 88. 合并两个有序数组
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+var merge = function (nums1, m, nums2, n) {
+    let j = 0, max = m;
+
+    for (let i = 0; i < nums1.length; i++) {
+        if (nums1[i] > nums2[j]) {
+            nums1.splice(i, 0, nums2[j]);
+            j++;
+            max++;
+            continue;
+        }
+        if (i > max - 1 && j <= n - 1) {
+            let x = nums2.splice(j, n);
+            nums1.splice(i, 0, ...x);
+            break;
+        }
+        if (j > n - 1) {
+            break;
+        }
+    }
+
+    nums1.splice(m + n, Infinity);
+};
+
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 104. 二叉树的最大深度
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function (root) {
+
+    return (function loop(tree, num) {
+        if (tree && (!!tree.val || tree.val === 0)) {
+            num++;
+            return Math.max(loop(tree.right, num), loop(tree.left, num));
+        } else {
+            return num;
+        }
+    })(root, 0);
+};
+
+/**
+ * 121. 买卖股票的最佳时机
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit3 = function (prices) {
+    let min = prices[0], profit = 0;
+
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < min) {
+            min = prices[i];
+        } else {
+            profit = Math.max(profit, prices[i] - min);
+        }
+    }
+
+    return profit;
+};
+
+/**
+ * 125. 验证回文串
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function (s) {
+    let arr = s.toUpperCase().split('').filter(token => !!/^\w$/.test(token));
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== arr[arr.length - 1 - i]) {
+            return false;
+        }
+        if (i >= arr.length - 1 - i) {
+            break;
+        }
+    }
+
+    return true;
+};
+
+console.log(isPalindrome('A man, a plan, a canal: Panama'));
+
+/*155 最小栈start*/
+
+/**
+ * initialize your data structure here.
+ */
+var MinStack = function () {
+    this.array = [];
+};
+
+/**
+ * @param {number} x
+ * @return {void}
+ */
+MinStack.prototype.push = function (x) {
+    this.array.push(x);
+};
+
+/**
+ * @return {void}
+ */
+MinStack.prototype.pop = function () {
+    this.array.pop();
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.top = function () {
+    return this.array[this.array.length - 1];
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.getMin = function () {
+    let min = this.array[0];
+
+    for (let i = 0; i < this.array.length; i++) {
+        if (min > this.array[i]) {
+            min = this.array[i];
+        }
+    }
+
+    return min;
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * var obj = new MinStack()
+ * obj.push(x)
+ * obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.getMin()
+ */
+
+/*155 最小栈end*/
+
+/**
+ * 167. 两数之和 II - 输入有序数组
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (numbers, target) {
+    let j = numbers.length - 1, i = 0;
+
+    while (i < j) {
+        let add = numbers[i] + numbers[j];
+        if (add === target) {
+            return [i + 1, j + 1];
+        } else if (add < target) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+
+    return [-1, -1];
+};
+
+
+/**
+ * 172. 阶乘后的零
+ * @param {number} n
+ * @return {number}
+ */
+var trailingZeroes = function (n) {
+    let count = 0, k = 1;
+
+    while (5 ** k <= n) {
+        count += Math.floor(n / (5 ** k));
+        k++;
+    }
+    return count;
+};
+
+/**
+ * 169. 多数元素
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function (nums) {
+    let obj = {};
+
+    for (let i = 0; i < nums.length; i++) {
+        if (obj[nums[i]]) {
+            obj[nums[i]]++;
+        } else {
+            obj[nums[i]] = 1;
+        }
+        if (obj[nums[i]] >= nums.length / 2) {
+            return nums[i];
+        }
+    }
+
+    return;
+};
+var majorityElement2 = function (nums) {
+    if (nums.length === 0) {
+        return;
+    }
+    let sum = 0, major = nums[0];
+
+    for (let i = 0; i < nums.length; i++) {
+        if (sum === 0) {
+            major = nums[i];
+        }
+        if (nums[i] === major) {
+            sum++;
+        } else {
+            sum--;
+        }
+    }
+
+    return major;
+};
+
+/**
+ * 190. 颠倒二进制位
+ * @param {number} n - a positive integer
+ * @return {number} - a positive integer
+ */
+var reverseBits = function (n) {
+    let nums = n.toString(2).split('');
+
+    while (nums.length < 32) {
+        nums.unshift('0');
+    }
+
+    for (let i = 0; i < nums.length; i++) {
+        if (i < nums.length / 2) {
+            let temp = nums[i];
+            nums[i] = nums[nums.length - 1 - i];
+            nums[nums.length - 1 - i] = temp;
+        } else {
+            break;
+        }
+    }
+
+    return parseInt(nums.join(''), 2);
+};
+
+/**
+ * 191. 位1的个数
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+var hammingWeight = function (n) {
+    let i = 0, num = 0;
+
+    while (2 ** i < n / 2) {
+        i++;
+    }
+
+    while (i >= 0) {
+        if (2 ** i <= n) {
+            n -= 2 ** i;
+            num++;
+        }
+        i--;
+    }
+    return num;
+};
+
+/**
+ * 198. 打家劫舍
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+
+    if (nums.length === 0) {
+        return 0;
+    }
+
+    if (nums.length === 1) {
+        return nums[0];
+    }
+
+    for (let i = 2; i < nums.length; i++) {
+        nums[i] = ((i - 3 >= 0) ? Math.max(nums[i - 3], nums[i - 2]) : nums[i - 2]) + nums[i];
+    }
+
+    return Math.max(nums[nums.length - 1], nums[nums.length - 2]);
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 203. 移除链表元素
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function (head, val) {
+    if (!head) {
+        return head;
+    }
+    let result, newHead = {};
+    newHead.val = null;
+    newHead.next = head;
+    result = newHead;
+    while (result && result.next) {
+        if (result.next.val === val) {
+            result.next = result.next.next;
+        }
+        result = result.next;
+    }
+    return head;
+};
+
+/**
+ * 206. 反转链表
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function (head) {
+    let prev = null, curr = head;
+
+    while (curr.next) {
+        let next = head.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    return prev;
+};
+// var reverseList2 = function (head) {
+//     let prev = null, current = head;
+//
+//     (function loop(current) {
+//         if (current.next) {
+//             loop(current.next, )
+//         } else {
+//             current.next = prev;
+//         }
+//     })(current, prev);
+// };
+
+/**
+ * 219. 存在重复元素 II
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var containsNearbyDuplicate = function (nums, k) {
+    let arr = [];
+
+    for (let i = 0; i < nums.length; i++) {
+        if (arr[nums[i]]) {
+            arr[nums[i]]++;
+        } else {
+            arr[nums[i]] = 1;
+        }
+
+        if (i >= k + 1) {
+            arr[nums[i - k - 1]]--;
+        }
+        if (arr[nums[i]] > 1) {
+            return true;
+        }
+    }
+    return false;
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 226. 翻转二叉树
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function (root) {
+    (function revert(root) {
+        if (!root) {
+            return;
+        }
+        if (root.left) {
+            revert(root.left);
+        }
+        if (root.right) {
+            revert(root.right);
+        }
+        let temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+    })(root);
+    return root;
+};
+var invertTree2 = function (root) {
+    let current = root;
+    while (current && current.left) {
+
+    }
+    return root;
+};
+
+/**
+ * Initialize your data structure here.
+ */
+var MyQueue = function () {
+    this.array = [];
+};
+
+/**
+ * Push element x to the back of queue.
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function (x) {
+    this.array.push(x);
+};
+
+/**
+ * Removes the element from in front of queue and returns that element.
+ * @return {number}
+ */
+MyQueue.prototype.pop = function () {
+    return this.array.shift();
+};
+
+/**
+ * Get the front element.
+ * @return {number}
+ */
+MyQueue.prototype.peek = function () {
+    return this.array[0];
+};
+
+/**
+ * Returns whether the queue is empty.
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function () {
+    return this.array.length === 0;
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * var obj = new MyQueue()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.peek()
+ * var param_4 = obj.empty()
+ */
+
+/**
+ * 263. 丑数
+ * @param {number} num
+ * @return {boolean}
+ */
+var isUgly = function (num) {
+    let result = num;
+    if (!num) {
+        return false;
+    }
+    while (result % 2 === 0 || result % 3 === 0 || result % 5 === 0) {
+        if (result % 2 === 0) {
+            result = result / 2;
+        }
+        if (result % 3 === 0) {
+            result = result / 3;
+        }
+        if (result % 5 === 0) {
+            result = result / 5;
+        }
+    }
+
+    return result === 1;
+};
+
+/**
+ * 283. 移动零
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function (nums) {
+    for (let i = nums.length - 1; i > 0; i--) {
+        for (let j = 0; j < i; j++) {
+            if (nums[j] === 0 && nums[i + 1] !== 0) {
+                let temp = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = temp;
+            }
+        }
+    }
+    return nums;
+};
+
+/**
+ * 342. 4的幂
+ * @param {number} num
+ * @return {boolean}
+ */
+var isPowerOfFour = function (num) {
+    if (num === 0) {
+        return false;
+    }
+    while (num % 4 === 0) {
+        num = num / 4;
+    }
+    return num === 1 || num === 0;
+};
+
+/**
+ * 349. 两个数组的交集
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function (nums1, nums2) {
+    let obj = {}, result = [];
+    for (let v of nums1) {
+        obj[v] = 1;
+    }
+    for (let v of nums2) {
+        if (obj[v]) {
+            obj[v] = 2;
+        }
+    }
+    for (let key in obj) {
+        if (obj[key] === 2) {
+            result.push(key);
+        }
+    }
+    return result;
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 437. 路径总和 III
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {number}
+ */
+var pathSum = function (root, sum) {
+    if (!root) {
+        return 0;
+    }
+    let result = 0;
+    (function loop(root, path) {
+        if (path === sum) {
+            result++;
+        }
+        if (root.left) {
+            loop(root.left, path + root.left.val);
+            path && loop(root.left, root.left.val);
+        }
+        if (root.right) {
+            loop(root.right, path + root.right.val);
+            path && loop(root.right, root.right.val);
+        }
+    })(root, root.val);
+
+    return result;
+};
+
+/**
+ * 371. 两整数之和
+ * @param {number} a
+ * @param {number} b
+ * @return {number}
+ */
+var getSum = function (a, b) {
+    while (b !== 0) {
+        let carry = (a & b) << 1;
+        a = a ^ b;
+        b = carry;
+    }
+    return a;
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 501. 二叉搜索树中的众数
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var findMode = function (root) {
+    let obj = {}, max = [];
+
+    if (!root) {
+        return;
+    }
+
+    max.push(root.val);
+
+    (function loop(current) {
+        if (current.val) {
+            if (obj[current.val]) {
+                obj[current.val]++;
+            } else {
+                obj[current.val] = 1;
+            }
+        }
+        if (current.left) {
+            loop(current.left);
+        }
+        if (current.right) {
+            loop(current.right);
+        }
+    })(root);
+
+    Object.keys(obj).forEach(key => {
+        if (obj[key] > obj[max[0]]) {
+            max = [key];
+        } else if (obj[key] === obj[max[0]] && (key !== max[0])) {
+            max.push(key);
+        }
+    });
+    return max;
+};
+
+/**
+ * 1260. 二维网格迁移
+ * @param {number[][]} grid
+ * @param {number} k
+ * @return {number[][]}
+ */
+var shiftGrid = function (grid, k) {
+    let m = grid.length, n = grid[0].length, newArr = [];
+    k = k % (m * n);
+    // while (k > 0) {
+    for (let i = m - 1; i >= 0; i--) {
+        for (let j = n - 1; j >= 0; j--) {
+            let newJ = (j + k) % n, newI = (Math.floor((j + k) / n) + i) % m;
+            // if (newI < i || (newI === i && newJ < j)) {
+            if (!newArr[newI]) {
+                newArr[newI] = [];
+            }
+            newArr[newI][newJ] = grid[i][j];
+            // } else {
+            //     grid[newI][newJ] = grid[i][j];
+            // }
+        }
+    }
+
+    return newArr;
+    // k--;
+    // }
+};
+
+/**
+ * Definition for singly-linked list.
+ */
+function ListNode(val) {
+    this.val = val;
+    this.next = null;
+}
+
+/**
+ * 2. 两数相加
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function (l1, l2) {
+    let current1 = l1, current2 = l2, carry = false, newL = new ListNode(null), current3 = newL;
+    while (current1 || current2 || carry) {
+        current3.next = new ListNode(null);
+        current3 = current3 && current3.next;
+        current3.val = ((current1 && current1.val) || 0) + ((current2 && current2.val) || 0);
+        if (carry) {
+            current3.val++;
+            carry = false;
+        }
+        if (current3.val >= 10) {
+            carry = true;
+            current3.val = current3.val % 10;
+        } else {
+            carry = false;
+        }
+        current1 = current1 && current1.next;
+        current2 = current2 && current2.next;
+    }
+
+    return newL.next;
+};
+
+/**
+ * 3. 无重复字符的最长子串
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+    if (s.length === 0) {
+        return 0;
+    }
+    let arr = s.split(''), obj = [], max = 1;
+
+    for (let i = 0; i < arr.length; i++) {
+        let index = obj.findIndex(item => item === arr[i]);
+        if (index === -1) {
+            obj.push(arr[i]);
+        } else {
+            max = Math.max(max, obj.length);
+            obj.splice(0, index + 1);
+        }
+    }
+    max = Math.max(max, obj.length);
+    return max;
+};
+
+/**
+ * 15. 三数之和
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+    let obj = {}, result = [];
+
+    nums = quick(nums);
+
+    if (nums.length < 3) {
+        return result;
+    }
+
+    for (let i = 0; i < nums.length; i++) {
+        let obj2 = {};
+        let target = -nums[i];
+        if (target in obj || nums[i] > 0) {
+            continue;
+        } else {
+            obj[target] = i;
+        }
+        for (let j = i + 1; j < nums.length; j++) {
+            if ((obj2[nums[j]] || obj2[nums[j]] === 0)) {
+                if (result.length === 0 || result[result.length - 1].join('-') !== [nums[i], obj2[nums[j]], nums[j]].join('-')) {
+                    result.push([nums[i], obj2[nums[j]], nums[j]]);
+                }
+            } else {
+                obj2[target - nums[j]] = nums[j];
+            }
+        }
+    }
+    return result;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 24. 两两交换链表中的节点
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function (head) {
+    let current = head;
+
+    while (current) {
+        let next = current.next;
+        current.next = next.next;
+        next.next = current;
+        current = current.next;
+    }
+
+    return head;
 };
